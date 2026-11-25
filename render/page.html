@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>The World Today — Wednesday 25 November 2026</title>
+<style>
+  :root{
+    --paper:#f4efe1; --ink:#141110; --ink2:#3a332c; --mute:#6d6154;
+    --red:#b0231b; --rule:#1b1713; --tint:#e7ddc6; --tint2:#efe8d6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#fff}
+  body{font-family:"Liberation Serif","DejaVu Serif",serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+  .sheet{position:relative;width:1024px;height:1024px;background:var(--paper);overflow:hidden;
+         padding:0 18px 0 18px;display:flex;flex-direction:column}
+  .sans{font-family:"Liberation Sans","DejaVu Sans",sans-serif}
+
+  /* ---------- rail ---------- */
+  .rail{display:flex;justify-content:space-between;align-items:center;height:20px;
+        border-top:5px solid var(--rule);margin-top:7px;padding-top:4px;
+        font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:7.9px;letter-spacing:1.5px;
+        text-transform:uppercase;color:var(--ink2)}
+  .rail b{letter-spacing:2px}
+
+  /* ---------- masthead ---------- */
+  .mast{text-align:center;margin-top:5px}
+  .mast .date{font-size:54px;line-height:1.08;font-weight:700;letter-spacing:-1.4px}
+  .mast .sub{margin-top:5px;font-family:"Liberation Sans","DejaVu Sans",sans-serif;
+             font-size:9.2px;letter-spacing:2.6px;text-transform:uppercase;color:var(--ink2)}
+  .dbl{border-top:2.5px solid var(--rule);border-bottom:0.8px solid var(--rule);height:3.6px;margin-top:6px}
+
+  /* ---------- stat strip ---------- */
+  .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:0;margin-top:9px;
+         border-top:1.6px solid var(--rule);border-bottom:1.6px solid var(--rule)}
+  .stat{padding:5px 6px 6px 7px;border-left:0.7px solid #b9ab92}
+  .stat:first-child{border-left:none;padding-left:2px}
+  .stat .n{font-size:23px;font-weight:700;line-height:1.0;letter-spacing:-0.4px}
+  .stat .n em{font-style:normal;color:var(--red)}
+  .stat .l{margin-top:3px;font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:7.2px;
+           line-height:1.25;letter-spacing:0.3px;text-transform:uppercase;color:var(--ink2)}
+
+  /* ---------- section heads ---------- */
+  .shead{display:flex;align-items:center;gap:7px;margin-top:12px;margin-bottom:6px}
+  .shead .t{font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:7.4px;letter-spacing:2.2px;
+            text-transform:uppercase;white-space:nowrap;color:var(--red);font-weight:700}
+  .shead .r{flex:1;height:0.8px;background:#9c8f78}
+  .shead .c{font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:7px;letter-spacing:1px;
+            text-transform:uppercase;color:var(--mute);white-space:nowrap}
+
+  /* ---------- leads ---------- */
+  .leads{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px}
+  .lead{display:flex;flex-direction:column}
+  .art{position:relative;height:121px;border:1.2px solid var(--rule);overflow:hidden;background:#22303a}
+  .art svg{display:block;width:100%;height:100%}
+  .art .banner{position:absolute;left:0;bottom:0;background:var(--red);color:#fdf8ec;
+               font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:7px;font-weight:700;
+               letter-spacing:1.6px;text-transform:uppercase;padding:2.5px 6px 2.5px 5px}
+  .kicker{margin-top:5px;font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:7.2px;
+          letter-spacing:1.5px;text-transform:uppercase;color:var(--mute);font-weight:700}
+  .lead .hl{font-size:19.6px;line-height:1.06;font-weight:700;letter-spacing:-0.3px;margin-top:2px}
+  .lead .body{margin-top:4px;font-size:8.9px;line-height:1.3;color:var(--ink2)}
+  .lead .src{margin-top:auto;padding-top:3px;font-family:"Liberation Sans","DejaVu Sans",sans-serif;
+             font-size:6.7px;letter-spacing:1.1px;text-transform:uppercase;color:var(--mute)}
+
+  /* ---------- briefs grid ---------- */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1.2px solid var(--rule)}
+  .b{padding:7.5px 7px 7.5px 0;border-bottom:0.7px solid #c3b69d;position:relative}
+  .b:nth-child(4n+2),.b:nth-child(4n+3),.b:nth-child(4n+4){border-left:0.7px solid #d3c8b1;padding-left:7px}
+  .b .top{display:flex;align-items:baseline;gap:4px}
+  .b .num{font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:7.2px;font-weight:700;
+          color:#fdf8ec;background:var(--red);padding:1px 3.4px;line-height:1.1;letter-spacing:0.4px}
+  .b .reg{font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:6.6px;letter-spacing:1.3px;
+          text-transform:uppercase;color:var(--mute);font-weight:700}
+  .b .h{margin-top:2.5px;font-size:10.2px;line-height:1.1;font-weight:700;letter-spacing:-0.1px}
+  .b .d{margin-top:2.5px;font-size:7.9px;line-height:1.26;color:var(--ink2)}
+  .b .s{margin-top:2.5px;font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:6.4px;
+        letter-spacing:0.9px;text-transform:uppercase;color:var(--mute)}
+
+  /* ---------- lower band ---------- */
+  .low{display:grid;grid-template-columns:300px 1fr;gap:12px;margin-top:13px}
+  .box{border:1.1px solid var(--rule);padding:7px 8px 7px}
+  .box.hd{background:var(--tint)}
+  .box .cap{display:flex;justify-content:space-between;align-items:baseline;
+            font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:6.6px;letter-spacing:1.7px;
+            text-transform:uppercase;color:var(--red);font-weight:700;margin-bottom:4px}
+  .box .cap span{color:var(--mute);font-weight:400;letter-spacing:1px}
+  .tl .row{display:flex;gap:5px;font-size:7.9px;line-height:1.2;color:var(--ink2);margin-bottom:2.6px}
+  .tl .t{font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:6.8px;color:var(--mute);
+         width:34px;flex:none;padding-top:0.6px;letter-spacing:0.4px}
+  .tl b{color:var(--ink)}
+  .also{columns:2;column-gap:12px}
+  .also .it{font-size:7.9px;line-height:1.22;color:var(--ink2);margin-bottom:3.2px;break-inside:avoid;
+            padding-left:6px;text-indent:-6px}
+  .also .it b{color:var(--ink)}
+  .also .it i{font-style:normal;color:var(--mute);font-family:"Liberation Sans","DejaVu Sans",sans-serif;
+              font-size:6.3px;letter-spacing:0.6px;text-transform:uppercase}
+
+  /* ---------- date check ---------- */
+  .check{margin-top:11px;border:1.5px solid var(--red);background:#f8efdc;padding:7px 9px 8px}
+  .check .cap{font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:7px;letter-spacing:2px;
+              text-transform:uppercase;color:var(--red);font-weight:700;display:flex;gap:6px;align-items:baseline}
+  .check .cap small{color:var(--mute);font-weight:400;letter-spacing:1px;font-size:6.2px}
+  .check .txt{margin-top:3px;font-size:7.9px;line-height:1.28;color:var(--ink2)}
+  .check .txt b{color:var(--ink)}
+
+  .foot{margin-top:auto;border-top:1.4px solid var(--rule);padding-top:5px;margin-bottom:7px;
+        display:flex;justify-content:space-between;
+        font-family:"Liberation Sans","DejaVu Sans",sans-serif;font-size:6.6px;letter-spacing:1.1px;
+        text-transform:uppercase;color:var(--mute)}
+</style>
+<body>
+<div class="sheet" id="sheet">
+
+  <div class="rail">
+    <span><b>The World Today</b> · World Edition · No. 345</span>
+    <span>29 stories · 22 countries · one day</span>
+    <span>Wednesday 25 November 2026 · all times UTC</span>
+  </div>
+
+  <div class="mast">
+    <div class="date">Wednesday 25 November 2026</div>
+    <div class="sub">The world in one day: every story below was filed on Wednesday 25 November 2026</div>
+    <div class="dbl"></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="n"><em>−7.9%</em></div><div class="l">Taiex intraday plunge · Al Jazeera</div></div>
+    <div class="stat"><div class="n">55%</div><div class="l">Want the Iran war ended now · UMD/Ipsos</div></div>
+    <div class="stat"><div class="n">74 <em>lashes</em></div><div class="l">For Iran singer's concert · Al Jazeera</div></div>
+    <div class="stat"><div class="n">74.4 <em>yrs</em></div><div class="l">Cuban life expectancy, down 4.4 · WHO</div></div>
+    <div class="stat"><div class="n"><em>−40%</em></div><div class="l">Hormuz oil traffic vs pre-war · AJ</div></div>
+    <div class="stat"><div class="n">$2.7tn</div><div class="l">AI investment this year · Gartner</div></div>
+  </div>
+
+  <div class="shead"><span class="t">The three biggest</span><span class="r"></span><span class="c">day's lead stories</span></div>
+
+  <div class="leads">
+    <div class="lead">
+      <div class="art">
+        <svg viewBox="0 0 300 96" preserveAspectRatio="none">
+          <rect width="300" height="96" fill="#1d2733"/>
+          <rect y="60" width="300" height="36" fill="#16222d"/>
+          <g stroke="#0f161d" stroke-width="1">
+            <path d="M0 72 h300 M0 84 h300" opacity=".55"/>
+          </g>
+          <path d="M40 52 h150 l-8 18 h-134 z" fill="#33414d"/>
+          <rect x="58" y="38" width="60" height="14" fill="#2b3844"/>
+          <rect x="62" y="30" width="8" height="8" fill="#3a4956"/>
+          <rect x="120" y="26" width="10" height="12" fill="#3a4956"/>
+          <g fill="#e0533f">
+            <path d="M150 52 q-6 -12 2 -22 q2 8 8 10 q-4 -16 6 -26 q0 12 8 16 q6 -10 10 -4 q-2 8 4 12 q-14 6 -18 14 z"/>
+          </g>
+          <g fill="#f2a13c" opacity=".9">
+            <path d="M156 52 q-4 -8 2 -14 q2 6 6 6 q-2 -10 4 -16 q0 8 5 10 q3 -6 6 -2 q-2 6 3 8 q-10 4 -12 8 z"/>
+          </g>
+          <g fill="#5d6b78" opacity=".8">
+            <ellipse cx="166" cy="14" rx="14" ry="5"/>
+            <ellipse cx="180" cy="8" rx="10" ry="4"/>
+          </g>
+          <circle cx="262" cy="18" r="9" fill="#f2c14e" opacity=".85"/>
+          <g stroke="#5d6b78" stroke-width="1" opacity=".6">
+            <path d="M0 64 h40 M210 64 h30 M255 68 h45"/>
+          </g>
+        </svg>
+        <div class="banner">Gulf · Strait of Hormuz</div>
+      </div>
+      <div class="kicker">Mines, tankers, and a widening war</div>
+      <div class="hl">Tankers ablaze off Hormuz; Hodeidah bombed</div>
+      <div class="body">Two oil tankers caught fire off the Strait of Hormuz after hitting naval mines, Iran's IRGC said, as the American naval blockade tightens. At dawn the Saudi-led coalition bombed the Houthi-run port of Hodeidah and two northern governorates; the Houthis threatened every Saudi Red Sea port.</div>
+      <div class="src">Al Jazeera · IRGC · Houthi statement</div>
+    </div>
+
+    <div class="lead">
+      <div class="art">
+        <svg viewBox="0 0 300 96" preserveAspectRatio="none">
+          <rect width="300" height="96" fill="#16202a"/>
+          <g stroke="#2f3f4b" stroke-width="0.7">
+            <path d="M0 24 h300 M0 46 h300 M0 68 h300 M0 88 h300"/>
+            <path d="M70 0 v96 M140 0 v96 M210 0 v96"/>
+          </g>
+          <path d="M6 16 L40 20 L70 18 L100 30 L130 26 L160 42 L192 40 L222 58 L254 62 L292 86 L292 96 L6 96 Z"
+                fill="#c8402c" opacity=".22"/>
+          <path d="M6 16 L40 20 L70 18 L100 30 L130 26 L160 42 L192 40 L222 58 L254 62 L292 86"
+                fill="none" stroke="#f2705a" stroke-width="2.6" stroke-linejoin="round"/>
+          <path d="M256 76 l26 13 l-8 1.5 l6 8 l-6.5 3.5 l-6 -8 l-5 5.5 z" fill="#f2705a"/>
+          <text x="9" y="14" font-family="Liberation Sans" font-size="8.5" font-weight="700"
+                letter-spacing="1.4" fill="#e8e0cc">TAIEX</text>
+          <text x="228" y="14" font-family="Liberation Sans" font-size="10" font-weight="700" fill="#f2705a">−7.9%</text>
+          <text x="9" y="92" font-family="Liberation Sans" font-size="6.4" letter-spacing="1.1"
+                fill="#9fb0bb">TOKYO ELECTRON −13.5%</text>
+        </svg>
+        <div class="banner">Markets · Asia close</div>
+      </div>
+      <div class="kicker">The Nvidia whiplash gives way</div>
+      <div class="hl">Taiex plunges 7.9% on AI-bubble doubts</div>
+      <div class="body">Taiwan's Taiex fell as much as 7.9% and Seoul's Kospi over 6%, the Nikkei 3.6%, a tech-led rout that reversed Tuesday's rally: Tokyo Electron −13.5%, Advantest −14.5%, Samsung −9.1%. Hong Kong's Hang Seng bucked the fall, up 1.3%.</div>
+      <div class="src">Al Jazeera · AP</div>
+    </div>
+
+    <div class="lead">
+      <div class="art">
+        <svg viewBox="0 0 300 96" preserveAspectRatio="none">
+          <rect width="300" height="96" fill="#26343d"/>
+          <rect y="70" width="300" height="26" fill="#1d2a33"/>
+          <path d="M-6 40 q40 -16 90 -10 q60 8 110 -2 q70 -12 112 4 L306 96 L-6 96 z" fill="#2e3d47" opacity=".0"/>
+          <path d="M20 44 q50 -14 120 -8 q70 6 140 -6 l0 8 q-70 12 -140 6 q-70 -6 -118 6 z" fill="#3c8f8a" opacity=".85"/>
+          <path d="M40 58 q40 -10 90 -6 q60 4 110 -4 l0 6 q-55 8 -112 4 q-50 -4 -86 4 z" fill="#356e6b" opacity=".8"/>
+          <g fill="#f4efe1">
+            <rect x="138" y="20" width="24" height="24" rx="3"/>
+            <rect x="145" y="15" width="10" height="34" rx="2"/>
+            <rect x="133" y="27" width="34" height="10" rx="2"/>
+          </g>
+          <g fill="#b0231b">
+            <rect x="146.5" y="22" width="7" height="20"/>
+            <rect x="139.5" y="28.5" width="21" height="7"/>
+          </g>
+          <g stroke="#5d6b78" stroke-width="1.2" opacity=".8">
+            <path d="M60 34 l10 4 M236 30 l-10 4 M80 12 l8 5"/>
+          </g>
+          <circle cx="256" cy="20" r="8" fill="#f2c14e" opacity=".85"/>
+        </svg>
+        <div class="banner">Cuba · Havana</div>
+      </div>
+      <div class="kicker">Tedros visits · blackouts top 20 hours</div>
+      <div class="hl">WHO demands end to the Cuba fuel blockade</div>
+      <div class="body">The WHO chief said the tightened US fuel restrictions do “direct harm to the Cuban people, especially the most vulnerable”, announcing $2m in UN health funding. Cuba's life expectancy has fallen from 78.8 years in 2020 to 74.4, the first decline since 1950.</div>
+      <div class="src">Al Jazeera · AFP · WHO</div>
+    </div>
+  </div>
+
+  <div class="shead"><span class="t">The rest of the day</span><span class="r"></span><span class="c">16 more, by region</span></div>
+
+  <div class="grid">
+    <div class="b"><div class="top"><span class="num">4</span><span class="reg">Gaza</span></div>
+      <div class="h">Strike kills a family of four</div>
+      <div class="d">An Israeli airstrike on an apartment block in Gaza City's Shati refugee camp killed four members of one family.</div>
+      <div class="s">Al Jazeera</div></div>
+
+    <div class="b"><div class="top"><span class="num">5</span><span class="reg">Israel</span></div>
+      <div class="h">First coalition pact signed</div>
+      <div class="d">Eisenkot's Yashar (21 seats) and Lieberman's Our Home (7) allied; the president's mandate runs to 6 December.</div>
+      <div class="s">Al Jazeera · Reuters</div></div>
+
+    <div class="b"><div class="top"><span class="num">6</span><span class="reg">Iran</span></div>
+      <div class="h">Singer flogged 74 times</div>
+      <div class="d">Parastoo Ahmadi was lashed over a YouTube concert — a woman singing in public remains a crime.</div>
+      <div class="s">Al Jazeera</div></div>
+
+    <div class="b"><div class="top"><span class="num">7</span><span class="reg">China · Pakistan</span></div>
+      <div class="h">First Pakistani in space</div>
+      <div class="d">Astronaut Muhammad Zeeshan Ali rode a Chinese rocket to the Tiangong station for a week-long stay.</div>
+      <div class="s">Al Jazeera · Reuters</div></div>
+
+    <div class="b"><div class="top"><span class="num">8</span><span class="reg">United States</span></div>
+      <div class="h">55% want the war ended now</div>
+      <div class="d">A UMD/Ipsos poll finds 80% of Democrats and 59% of independents want the Iran war stopped regardless of terms.</div>
+      <div class="s">UMD/Ipsos · Al Jazeera</div></div>
+
+    <div class="b"><div class="top"><span class="num">9</span><span class="reg">US · Alaska</span></div>
+      <div class="h">Alaska withholds voter files</div>
+      <div class="d">The state ended its agreement to hand voter records to the Justice Department.</div>
+      <div class="s">Al Jazeera</div></div>
+
+    <div class="b"><div class="top"><span class="num">10</span><span class="reg">US · Iowa</span></div>
+      <div class="h">Army detonates 4t of explosives</div>
+      <div class="d">Controlled blasts destroyed more than four tonnes of unstable lead azide at the Iowa Army Ammunition Plant.</div>
+      <div class="s">Al Jazeera · AFP</div></div>
+
+    <div class="b"><div class="top"><span class="num">11</span><span class="reg">Venezuela</span></div>
+      <div class="h">Wage protests rock Caracas</div>
+      <div class="d">Police clashed with demonstrators demanding a higher minimum wage near the Miraflores palace.</div>
+      <div class="s">Al Jazeera</div></div>
+
+    <div class="b"><div class="top"><span class="num">12</span><span class="reg">Colombia</span></div>
+      <div class="h">Supermarket siege holds on</div>
+      <div class="d">Gunmen still hold about 25 hostages in a Cartagena Éxito store, after a car bomb in Villavicencio.</div>
+      <div class="s">Al Jazeera · AFP</div></div>
+
+    <div class="b"><div class="top"><span class="num">13</span><span class="reg">United Kingdom</span></div>
+      <div class="h">Sabotage warning to suppliers</div>
+      <div class="d">MI5's NPSA said firms supplying Ukraine's military are targets of Russian proxy arson; ministers briefed.</div>
+      <div class="s">Al Jazeera · Reuters</div></div>
+
+    <div class="b"><div class="top"><span class="num">14</span><span class="reg">Australia</span></div>
+      <div class="h">Ex-officer guilty of murders</div>
+      <div class="d">Beau Lamarre-Condon was convicted of killing TV presenter Jesse Baird and Luke Davies in 2024.</div>
+      <div class="s">The Guardian</div></div>
+
+    <div class="b"><div class="top"><span class="num">15</span><span class="reg">Senegal</span></div>
+      <div class="h">AFCON title handed back</div>
+      <div class="d">Fans celebrated after CAS restored Senegal as 2025 champions, overturning CAF's award to Morocco.</div>
+      <div class="s">CAS · Al Jazeera</div></div>
+
+    <div class="b"><div class="top"><span class="num">16</span><span class="reg">The Gambia</span></div>
+      <div class="h">Vote set for 5 December</div>
+      <div class="d">Campaign peaks over jobs, living costs and unfulfilled transitional justice before the presidential poll.</div>
+      <div class="s">Al Jazeera</div></div>
+
+    <div class="b"><div class="top"><span class="num">17</span><span class="reg">Norway · Cameroon</span></div>
+      <div class="h">War-crimes trial opens in Oslo</div>
+      <div class="d">Cameroonian separatist leader Ayaba Cho Lucas pleaded not guilty as the trial got under way.</div>
+      <div class="s">Al Jazeera · EPA</div></div>
+
+    <div class="b"><div class="top"><span class="num">18</span><span class="reg">Türkiye</span></div>
+      <div class="h">Galatasaray: UEFA complaint</div>
+      <div class="d">The club said Israel had complained to UEFA over pro-Palestine banners shown at its stadium.</div>
+      <div class="s">Al Jazeera</div></div>
+
+    <div class="b"><div class="top"><span class="num">19</span><span class="reg">World</span></div>
+      <div class="h">Five women killed every hour</div>
+      <div class="d">UN Women said partners or relatives killed five women an hour in 2025, on the day against violence on women.</div>
+      <div class="s">UN Women · EPA</div></div>
+  </div>
+
+  <div class="low">
+    <div class="box tl">
+      <div class="cap">The day in order <span>UTC, approx.</span></div>
+      <div class="row"><span class="t">02:00</span><span><b>Hodeidah</b> — Saudi-led jets bomb the port and two governorates</span></div>
+      <div class="row"><span class="t">05:30</span><span><b>Taipei</b> — Taiex closes down as much as 7.9%</span></div>
+      <div class="row"><span class="t">06:30</span><span><b>Seoul</b> — Kospi −6%+; Nikkei −3.6% in Tokyo</span></div>
+      <div class="row"><span class="t">09:00</span><span><b>Gansu</b> — Chinese rocket carries first Pakistani to Tiangong</span></div>
+      <div class="row"><span class="t">12:00</span><span><b>Hormuz</b> — IRGC reports two mine-struck tankers ablaze</span></div>
+      <div class="row"><span class="t">14:00</span><span><b>London</b> — NPSA warns Ukraine suppliers of sabotage</span></div>
+      <div class="row"><span class="t">17:00</span><span><b>Washington</b> — poll: 55% want the Iran war ended now</span></div>
+      <div class="row"><span class="t">21:00</span><span><b>Gaza City</b> — Shati strike kills a family of four</span></div>
+    </div>
+
+    <div class="box hd">
+      <div class="cap">Also on Wednesday <span>10 more, with sources</span></div>
+      <div class="also">
+        <div class="it"><b>Hormuz oil traffic</b> is down about 40% from pre-war levels; a fifth of the world's oil transits the strait. <i>Al Jazeera</i></div>
+        <div class="it"><b>Nvidia's Monday surge</b> of 31.5% — about $952bn regained — stands as the largest one-day gain in US market history. <i>Al Jazeera</i></div>
+        <div class="it"><b>Gartner forecasts</b> $2.7tn of global AI investment this year, rising to $3.6tn in 2027. <i>Gartner via Al Jazeera</i></div>
+        <div class="it"><b>Van Hollen leads Schumer</b> about 3 to 1 among Democratic voters in the party's leadership fight. <i>Al Jazeera</i></div>
+        <div class="it"><b>53% of Democrats</b> back Congress cutting the war's funding even at the risk of a shutdown. <i>UMD/Ipsos</i></div>
+        <div class="it"><b>Only 12.7%</b> of Americans think the US controls the Strait of Hormuz; 35% say Iran does. <i>UMD/Ipsos</i></div>
+        <div class="it"><b>Advantest fell 14.5%</b> and SK Hynix 9.9% as the chip rout spread through the supply chain. <i>Al Jazeera</i></div>
+        <div class="it"><b>The WHO announced $2m</b> for Cuba's immunisation and equipment as its health system craters. <i>WHO · Al Jazeera</i></div>
+        <div class="it"><b>Cuba reports blackouts</b> of more than 20 hours a day; UN funding covers vaccines and kit. <i>Cuban government · Al Jazeera</i></div>
+        <div class="it"><b>Herzog's mandate</b> to Eisenkot runs to 6 December — then Netanyahu's chance, or new elections. <i>Reuters</i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="check">
+    <div class="cap">Date check <small>what this page leaves out, and why</small></div>
+    <div class="txt">Every story above happened, or was first reported, on <b>Wednesday 25 November 2026</b>. Deliberately left out as <b>Tuesday's</b> news: the US verdict against <b>Huawei</b> for trade-secrets conspiracy (24 Nov), <b>Sheikh Hasina's</b> announced return to Bangladesh on 16 December (24 Nov), the <b>Landmine Monitor's</b> five-year-high casualty count (24 Nov), the corruption probe into Shanghai party chief <b>Chen Jining</b> (24 Nov), Mexico's refusal to extradite <b>“El Chapo Isidro”</b> (24 Nov), the <b>Hanoi restaurant blast</b> that killed six (24 Nov) and <b>Rep. Gomez's resignation</b> (24 Nov).</div>
+  </div>
+
+  <div class="foot">
+    <span>Compiled 25 Nov 2026 · Al Jazeera · Reuters · AP · AFP · The Guardian · WHO · UMD/Ipsos · UN Women</span>
+    <span>29 stories · 22 countries · 5 continents</span>
+  </div>
+</div>
+
+<script>
+  // Layout audit: reports overflow and overlap so the page can be checked without eyes.
+  window.__audit = () => {
+    const out = { overflow: [], overlaps: [], size: null, text: 0 };
+    const sheet = document.getElementById('sheet');
+    out.size = [sheet.getBoundingClientRect().width, sheet.getBoundingClientRect().height];
+    const all = [...sheet.querySelectorAll('*')];
+    for (const el of all) {
+      if (el.ownerSVGElement) continue; // SVG shapes: covered by the svgText getBBox check below
+      if (el.children.length && !el.classList.contains('art')) continue;
+      if (!el.textContent.trim()) continue;
+      out.text++;
+      const oy = el.scrollHeight - el.clientHeight;
+      const ox = el.scrollWidth - el.clientWidth;
+      if ((oy > 1 || ox > 1) && getComputedStyle(el).overflow === 'visible') {
+        out.overflow.push([el.tagName + '·' + (el.getAttribute && el.getAttribute('class') || '') + '·' + (el.getAttribute && (el.getAttribute('d') || el.getAttribute('x') || '') || '').slice(0, 60), Math.round(el.getBoundingClientRect().top), oy, ox]);
+      }
+      const r = el.getBoundingClientRect();
+      if (r.bottom > 1024 || r.right > 1024 || r.top < 0) {
+        out.overflow.push(['offscreen:' + (el.className || el.tagName), Math.round(r.top), Math.round(r.bottom), Math.round(r.right)]);
+      }
+    }
+    out.sections = ['.rail','.mast','.stats','.shead','.leads','.grid','.low','.check','.foot'].map((sel)=>{
+      const el = sheet.querySelector(sel); const r = el.getBoundingClientRect();
+      return [sel, Math.round(r.top), Math.round(r.bottom), Math.round(r.height)];
+    });
+    out.fonts = [['mast','.mast .date'],['leadHl','.lead .hl'],['briefHl','.b .h'],['briefD','.b .d'],['also','.also .it']].map(([k,sel])=>{
+      return [k, getComputedStyle(sheet.querySelector(sel)).fontSize];
+    });
+    out.svgText = [...sheet.querySelectorAll('svg text')].map((t)=>{
+      const b = t.getBBox(); const svg = t.ownerSVGElement;
+      const vb = svg.getAttribute('viewBox').split(/\s+/).map(Number);
+      return [t.textContent, Math.round(b.x), Math.round(b.x+b.width), vb[2], Math.round(b.x+b.width) > vb[2]];
+    });
+    out.statLines = [...sheet.querySelectorAll('.stat')].map((el)=>{
+      const r = el.getBoundingClientRect();
+      const l = el.querySelector('.l');
+      return [el.querySelector('.n').textContent.trim(), Math.round(r.height), l.getClientRects().length, Math.round(l.getBoundingClientRect().height)];
+    });
+    const leaves = [...sheet.querySelectorAll(
+      '.b .h, .b .d, .b .s, .b .reg, .lead .hl, .lead .body, .lead .src, .kicker, ' +
+      '.stat .n, .stat .l, .tl .row, .also .it, .check .txt, .check .cap, .mast .date, ' +
+      '.mast .sub, .shead .t, .shead .c, .box .cap, .foot span, .rail span')];
+    const rects = leaves.map((el) => [el, el.getBoundingClientRect()]);
+    for (let i = 0; i < rects.length; i++) {
+      for (let j = i + 1; j < rects.length; j++) {
+        const [a, ra] = rects[i], [b, rb] = rects[j];
+        if (a.contains(b) || b.contains(a)) continue;
+        const ox = Math.min(ra.right, rb.right) - Math.max(ra.left, rb.left);
+        const oy = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top);
+        if (ox > 2 && oy > 2) out.overlaps.push([a.className, b.className, Math.round(ox), Math.round(oy)]);
+      }
+    }
+    return out;
+  };
+  const pre = document.createElement('pre');
+  pre.id = 'audit';
+  pre.style.cssText = 'position:fixed;left:0;top:0;display:none';
+  document.body.appendChild(pre);
+  pre.textContent = JSON.stringify(window.__audit());
+  if (location.search.includes('audit')) pre.style.display = 'block';
+</script>
+</body>
+</html>
